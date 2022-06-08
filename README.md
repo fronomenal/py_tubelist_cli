@@ -17,6 +17,7 @@ Project uses the following packages:
 * typer
 
 ## Launch
+All commands should be in the project directory
 
 ### Setup
 Follow these steps to setup the script for first time use: 
@@ -31,7 +32,7 @@ The list id can be found in the _list_ query string of all playlist urls
 There are two commands available:  
   1. Playtime: 
      - Sums the play time of all videos in the playlist
-     - run `python playtime --help` for details
+     - run `python ytlist playtime --help` for details
   2. Popular: 
      - Displays a sorted list of all the videos in the playlist
-     - run `python popular --help` for details
+     - run `python ytlist popular --help` for details
