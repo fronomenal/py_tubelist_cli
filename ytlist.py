@@ -67,8 +67,49 @@ def playtime(plid: str):
 
 
 @app.command()
-def popular():
-    pass
+def popular(plid: str, start: int = 1, end: int = -1):
+    pl = []
+
+    npt = None
+    while True:
+        pl_req = yt.playlistItems().list(
+            part="contentDetails",
+            playlistId=plid,
+            maxResults=30,
+            pageToken=npt
+        )
+        pl_res = pl_req.execute()
+
+        npt = pl_res.get("nextPageToken")
+
+        vids = []
+        for item in pl_res["items"]:
+            vids.append(item["contentDetails"]["videoId"])
+
+        vid_ids = ",".join(vids)
+
+        vd_req = yt.videos().list(part="statistics", id=vid_ids)
+
+        vd_res = vd_req.execute()
+
+        for item in vd_res["items"]:
+            link = f"https://www.youtube.com/watch?v={item['id']}"
+            views = int(item["statistics"]["viewCount"])
+
+            pl.append({"link": link, "views": views})
+
+        pl.sort(key=lambda vid: vid["views"], reverse=True)
+
+        if not npt:
+            break
+
+    if start > len(pl) or end > len(pl):
+        print("start/end option values out of range")
+        exit(1)
+
+    for i, v in enumerate(pl[start-1:end]):
+        print("{:d} -> {:s} \n     {:,d}".format(i+start, v['link'], v['views']))
+        # print("{0: >42} {1:21}".format(v['link'], v['views']))
 
 
 if __name__ == '__main__':
