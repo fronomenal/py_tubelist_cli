@@ -11,8 +11,8 @@ load_dotenv("./secrets/.env")
 yt = build("youtube", "v3", developerKey=os.environ["YT_API_KEY"])
 
 
-def main():
-
+@app.command()
+def playtime(plid: str):
     h_pattern = re.compile(r"(\d+)H")
     m_pattern = re.compile(r"(\d+)M")
     s_pattern = re.compile(r"(\d+)S")
@@ -23,7 +23,7 @@ def main():
     while True:
         pl_req = yt.playlistItems().list(
             part="contentDetails",
-            playlistId="PLNF8K9Ddz0kKfujG6blfAxngYh_C66C_q",
+            playlistId=plid,
             maxResults=30,
             pageToken=npt
         )
@@ -64,12 +64,6 @@ def main():
     hrs, mins = divmod(mins, 60)
 
     print(f"Total playtime is {hrs}:{mins}:{secs}")
-    # app()
-
-
-@app.command()
-def playtime():
-    pass
 
 
 @app.command()
@@ -78,4 +72,4 @@ def popular():
 
 
 if __name__ == '__main__':
-    main()
+    app()
