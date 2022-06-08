@@ -7,8 +7,13 @@ from dotenv import load_dotenv
 
 app = typer.Typer()
 
-load_dotenv("./secrets/.env")
-yt = build("youtube", "v3", developerKey=os.environ["YT_API_KEY"])
+yt = None
+
+
+def gauth():
+    global yt
+    load_dotenv("./secrets/.env")
+    yt = build("youtube", "v3", developerKey=os.environ["YT_API_KEY"])
 
 
 @app.command()
@@ -20,6 +25,8 @@ def playtime(plid: str):
 
     :return: A runtime sum of every video in the list
     """
+
+    gauth()
 
     h_pattern = re.compile(r"(\d+)H")
     m_pattern = re.compile(r"(\d+)M")
@@ -88,6 +95,8 @@ def popular(plid: str, start: int = 1, end: int = -1):
     :return: View count sorted videos
     """
 
+    gauth()
+
     pl = []
 
     npt = None
@@ -130,6 +139,18 @@ def popular(plid: str, start: int = 1, end: int = -1):
     for i, v in enumerate(pl[start-1:end]):
         print("{:d} -> {:s} \n     {:,d}".format(i+start, v['link'], v['views']))
         # print("{0: >42} {1:21}".format(v['link'], v['views']))
+
+
+@app.command()
+def init():
+
+    fpath = "./secrets/.env"
+    os.makedirs(os.path.dirname(fpath), exist_ok=True)
+    with open(fpath, "w") as f:
+        api_key = typer.prompt("What's your google youtube api key?")
+        typer.echo(f"Initializing script with key: {api_key}")
+        f.write(f"YT_API_KEY = {api_key}")
+        typer.echo("Success. You can now use either the Popular or Playtime command")
 
 
 if __name__ == '__main__':
