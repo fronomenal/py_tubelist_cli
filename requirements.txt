@@ -1,1 +1,3 @@
 google-api-python-client
+python-dotenv~=0.20.0
+typer~=0.4.1
