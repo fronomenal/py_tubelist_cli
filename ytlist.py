@@ -13,6 +13,14 @@ yt = build("youtube", "v3", developerKey=os.environ["YT_API_KEY"])
 
 @app.command()
 def playtime(plid: str):
+    """
+    Get an aggregate of all the playtime of each video in a playlist
+
+    :param plid: The id of the playlist. Can be obtained from the list query string of playlist urls
+
+    :return: A runtime sum of every video in the list
+    """
+
     h_pattern = re.compile(r"(\d+)H")
     m_pattern = re.compile(r"(\d+)M")
     s_pattern = re.compile(r"(\d+)S")
@@ -68,6 +76,18 @@ def playtime(plid: str):
 
 @app.command()
 def popular(plid: str, start: int = 1, end: int = -1):
+    """
+    Get a list of all links in a playlist sorted by view count
+
+    :param plid: The id of the playlist. Can be obtained from the list query string of playlist urls
+
+    :param start: Limit the number of displayed videos from a start position
+
+    :param end: Limit the number of displayed videos by a cutoff end
+
+    :return: View count sorted videos
+    """
+
     pl = []
 
     npt = None
