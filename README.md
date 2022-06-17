@@ -21,7 +21,8 @@ All commands should be in the project directory
 
 ### Setup
 Follow these steps to setup the script for first time use: 
-
+     
+    - get dependencies with `pip install -r requirements.txt`
     - run `python ytlist.py init`
     - provide your youtube api key at the prompt
     - success message means you're ready to go! (really wish i had used golang instead now)
