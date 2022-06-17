@@ -1,3 +1,6 @@
 venv
 secrets
+
+__pycache__
+
 .idea
