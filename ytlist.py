@@ -78,7 +78,7 @@ def playtime(plid: str):
     mins, secs = divmod(runtime, 60)
     hrs, mins = divmod(mins, 60)
 
-    print(f"Total playtime is {hrs}:{mins}:{secs}")
+    print(f"Total playtime is {hrs:02d}h:{mins:02d}m:{secs:02d}s")
 
 
 @app.command()
