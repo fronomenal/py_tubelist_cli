@@ -29,7 +29,7 @@ Follow these steps to setup the script for first time use:
 
 ### Commands
 Commands take the list id of a playlist as an argument.
-The list id can be found in the _list_ query string of all playlist urls
+The list id can be found in the _list_ query string of all youtube playlist urls.
 There are two commands available:  
   1. Playtime: 
      - Sums the play time of all videos in the playlist
